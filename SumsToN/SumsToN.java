@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 class SumsToN {
 
-    static void printSumsToN(int[] arr, int index, int n, int current) {
+    public static void printSumsToN(int[] arr, int index, int n, int current) {
         if (current < 0) {
             return;
         }
