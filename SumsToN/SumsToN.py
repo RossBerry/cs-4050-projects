@@ -7,9 +7,19 @@ by the user in the console.
 """
 __author__ = "Kenneth Berry"
 
-def sums_to_n(num_list, index, input_n, current):
+
+def sums_to_n(input_n):
     """
-    Recursively finds all sums adding up to n and prints
+    Displays all unique sums adding up to input_n by calling
+    recursive function print_sums()
+    """
+    zero_list = [0 for num in range(input_n)]
+    print_sums(zero_list, 0, input_n, input_n)
+
+
+def print_sums(num_list, index, input_n, current):
+    """
+    Recursively finds all sums adding up to input_n and prints
     them to the console
     """
     if current < 0:
@@ -22,7 +32,6 @@ def sums_to_n(num_list, index, input_n, current):
                 out_string += str(num_list[i])
             else:
                 out_string += (str(num_list[i]) + " + ")
-
         print(out_string)
         return
 
@@ -33,11 +42,10 @@ def sums_to_n(num_list, index, input_n, current):
 
     while prev <= input_n:
         num_list[index] = prev
-        sums_to_n(num_list, index + 1, input_n, current - prev)
+        print_sums(num_list, index + 1, input_n, current - prev)
         prev += 1
 
 
 if __name__ == "__main__":
     INPUT_N = int(input("Enter a positive integer: "))
-    ZERO_LIST = [0 for num in range(INPUT_N)]
-    sums_to_n(ZERO_LIST, 0, INPUT_N, INPUT_N)
+    sums_to_n(INPUT_N)
