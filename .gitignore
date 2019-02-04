@@ -1,2 +1,5 @@
 # ignore all class files
 *.class
+
+# ignore VS Code settings folder
+/.vscode
