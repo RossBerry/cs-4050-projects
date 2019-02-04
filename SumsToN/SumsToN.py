@@ -2,7 +2,7 @@
 """
 SumsToN.py
 
- Gets a positive integer N, input by the user, and then
+ Gets a positive integer N input by the user, and then
  prints out all unique sums of positive integers adding 
  up to N.
 """
