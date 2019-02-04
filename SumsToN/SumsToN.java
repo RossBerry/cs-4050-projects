@@ -1,8 +1,9 @@
 /**
  * SumsToN.java
  * 
- * Prints all unique sums that result in a positive integer input
- * by the user in the console.
+ * Gets a positive integer N, input by the user, and then
+ * prints out all unique sums of positive integers adding 
+ * up to N.
  * 
  * @author Kenneth Berry
  */
@@ -17,11 +18,13 @@ class SumsToN {
         }
 
         if (countdown == 0) {
+
             // DEBUG - print contents of array
             // for (int i = 0; i < n; i++){
             // System.out.print(arr[i]);
             // }
             // System.out.println();
+
             for (int i = 0; i < index; i++) {
                 if (i + 1 == index) {
                     System.out.print(arr[i]);
