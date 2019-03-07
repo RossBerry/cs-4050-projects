@@ -1,11 +1,11 @@
 /**
  * SumsToN.java
-
- * Gets a positive integer N input by the user, and then
- * prints out all unique sums of positive integers adding 
- * up to N.
  * 
- * @author Kenneth Berry
+ * CS 4050 Project 4: Sums to n Problem by Brute Force
+ * 
+ * Kenneth Berry
+ * Alex Parmentier
+ * John Sanders
  */
 
 import java.util.Scanner;
