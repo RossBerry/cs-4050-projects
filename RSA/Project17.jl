@@ -1,5 +1,6 @@
-using Primes
+# CS 4050 Project 17
 
+using Primes
 
 function ModExp(a, e, n)
     squares = a
@@ -62,83 +63,25 @@ end
 # end
 
 
-function ɸ_max(n::BigFloat)
-    return (4 * (div((n+1-2*(sqrt(n))), BigInt(4))))
+function ɸ_max(n::BigInt)
+    return BigInt(divrem((4 * (div((n+1-2*(sqrt(n))), BigInt(4)))), 1)[1])
 end
 
-function ɸ_min(n::BigFloat)
-    return (3 * (div((n+1-2*(sqrt(n))), BigInt(4))))
+function ɸ_min(n::BigInt)
+    return BigInt(divrem((3 * (div((n+1-2*(sqrt(n))), BigInt(4)))), 1)[1])
 end
 
-
-###############################################
-# Finds small solutions to P(x0) = 0 (mod N), #
-# as given by the Coppersmith condition       # 
-###############################################
-function CoppersmithSolve(P, N, ep = 0.03)
-    
-    # modularize polynomial
-    P(x) = P(x)%N;
-    d = degree(P);
-    
-    # set parameters
-    m = ceil(1/d/ep)
-    mu = ceil(0.5*N^(1/d-ep))
-    
-    # construct q{i,j}(x)
-    q = Array(Function, d, m);
-    for i = 1:d
-        for j = 1:m
-            v(x) = x^i*N^j*f(x)^(m-j)
-            q[i, j] = v
+function prime_factors(lo::BigInt, hi::BigInt, n::BigInt)
+    factors = []
+    current = lo
+    while current < hi
+        if isprime(current) && n % current == 0
+            append!(factors, current)
         end
+        current += BigInt(1)
     end
-            
-    # construct lattice of coefficient vectors
-    Lambda = Array(Int, d*m, d*m)
-    k = 1
-    for i = -m+1:1
-        for j = 0:delta
-            c = zeros(d*m)
-            v(x) = q[j, -i](mu*x);
-            c[1:length(coeffs(v))] = coeffs(v)
-            Lambda[:, k] = flipud(c);
-            k = k + 1
-        end
-    end
-    
-    # LLL basis reduction
-    b_short = LLL_reduce(Lambda)[:, 1];
-    
-    # construct Q(x) from elements of shortened vector
-    Q(x) = 0
-    Q_coeffs = flipud(b_short);
-    for i = 1:size
-        Q(x) = Q + round(Q_coeffs[i]/mu^(i-1))*x^(i-1)
-    end
-
-    x0 = roots(Q)
-    return x0
+    return factors
 end
-
-
-function DecrpytRSA(guess, C, N, r, ep)
-    # construct modular polynomial
-    # C is the ciphertext
-    # N is the public modulus
-    # r is the public exponent
-    # ep is passed into Coppersmith solver
-    P(x) = ((guess + x)^r - C) % N
-    
-    result = CoppersmithSolve(P, N, ep) + guess
-    println("decrypted text: ", result)
-    return result
-end
-
-# A decrypted message is m = c^d [mod n]
-function decrypt{T <: Integer}(c::T, d::T, n::T)
-    return modulo_power(c, d, n)
-  end
 
 # Project 16
 # println("Project 16:")
@@ -157,29 +100,26 @@ function decrypt{T <: Integer}(c::T, d::T, n::T)
 # println("decrypted c = ", decrypt_c)
 
 # Project 17
-c = BigFloat(1027795314451781443748475386257882516)
-r = BigInt(2287529)
-n = BigInt( 1029059010426758802790503300595323911)
-# decrypt_c = ModExp(c, e, n)
+c = BigInt(1027795314451781443748475386257882516)
+println("c = ", c)
+e = BigInt(2287529)
+println("e = ", e)
+n = BigInt(1029059010426758802790503300595323911)
+println("n = ", n)
+p = BigInt(216273774599027)
+q = BigInt(4758131272895389067293)
+est_n = p * q
+println("est_n = ", est_n)
+ɸ = (p - 1) * (q - 1)
+println("phi = ", ɸ)
+# d = gcdx(ɸ, e)[3]
+d = BigInt(941852144648755861760623254442258121)
+println("d = ", d)
+decrypted_code = ModExp(c, d, n)
+println("decrypted code = ", decrypted_code)
+# println("\nfinding prime factors of n...")
+# factors = prime_factors(lower_bound, upper_bound, test_n)
 
-# println(decrypt_c)
-
-# # test for get_primes_to_sqrt:
-# println(sqrt)
-# println(get_primes_to_sqrt(c))
-
-# test for get_factors:
-#println(get_factors(c))
-
-
-# # test for ɸ:
-# ɸ_lower_bound = ɸ_min(c)
-# ɸ_upper_bound = ɸ_max(c)
-
-# primes = primes_to_n(ɸ_lower_bound, ɸ_upper_bound)
-
-# println(ɸ_lower_bound)
-# println(ɸ_upper_bound)
-# println(primes)
-
-println(decrypted_ciphertext = decrypt(c, d, n))
+# for factor in factors
+#     println(factor)
+# end
