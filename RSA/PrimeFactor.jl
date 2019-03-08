@@ -1,36 +1,19 @@
-function prime_factor(n::BigInt)
-    println("finding prime factors of: ", n)
-    primes = []
-    p = BigInt(2)
-    while n >= p^2
-        if mod(n, p) == 0
-            append!(primes, p)
-            println(p)
-            n = div(n, p)
-        else
-            p += 1
-        end
-    end
-    return primes
-end
+using Primes
 
-function get_factors(n, primes)
-    factors = []
-    one = BigInt(1)
-    for p in primes
-        for q in primes
-            if (p - one) * (q - one) == n
-                append!(factors, [p, q])
-                println("[",p,", ",q,"]")
-            end
-        end
-    end
+function prime_factors(n::BigInt)
+    factorization = factor(n)
+    factors = [factor.first for factor in factorization]
+    factors = tuple(factors[1], factors[2])
     return factors
 end
 
-p = BigInt(4008793)
-q = BigInt(4011409)
+
+p = BigInt(13)
+q = BigInt(3)
 n = p * q
 c = BigInt(1027795314451781443748475386257882516)
-primes = prime_factor(c)
-factors = get_factors(c, primes)
+
+prime_factors(n)
+#p, q = factors
+
+
