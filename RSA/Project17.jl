@@ -5,17 +5,6 @@
 
 using Primes
 
-module MyModule
-    using PyCall
-
-    function __init__()
-        py"""
-        def decode(n):
-            return chr(n)
-        """
-    end
-    dec(n) = py"decode"(n)
-end
 
 function ModExp(a, e, n)
     squares = a
@@ -63,7 +52,7 @@ function gcdBigInt(f::BigInt, e::BigInt)
         table[row+1, 2] = table[row, 3]
         row += 1
     end
-    if mod(row, 2) == zero
+    if row % 2 == zero
         table[row, 5] = one
         table[row, 6] = zero
     else
@@ -82,7 +71,8 @@ function decode_message(a::BigInt)
     while a > 0
         sym = Int64(a % 100)
         a = div(a, 100)
-        s = string(MyModule.dec(sym+32)) * s;
+        char = Char(sym+31)
+        s = string(Char(sym+31)) * s
     end
     return s
 end
@@ -97,10 +87,9 @@ println("given values:", "\n","c = ", c, "\n","n = ", n, "\n","e = ", e, "\n")
 
 # Calculate p and q:
 println("\nfinding prime factors of n, this may take several minutes ... \n")
-# factors = prime_factors(n)
-# p, q = factors
-p = BigInt(216273774599027)
-q = BigInt(4758131272895389067293)
+p, q = prime_factors(n)
+# p = BigInt(216273774599027)
+# q = BigInt(4758131272895389067293)
 println("p = ", p, "\n", "q = ", q, "\n")
 ɸ = (p - 1) * (q - 1)
 println("phi = ", ɸ)
