@@ -15,11 +15,10 @@ public class Project24
         {
             System.out.println(e);
         }
-        int size = input.nextInt();  input.nextLine();
-        System.out.println(size);
+        int size = input.nextInt(); input.nextLine();
+        System.out.println("table size = " + size + " x " + size + "\n");
         int[][] table = new int[size][size];
-        int row = 0;
-        int col = 0;
+        int row = 0, col = 0;
         while (row < size)
         {
             if (col >= size)
@@ -43,8 +42,7 @@ public class Project24
     private static void printTable(int[][] table)
     {
         int size = table.length;
-        int row = 0;
-        int col = 0;
+        int row = 0, col = 0;
         while (row < size)
         {
             if (col >= size)
@@ -72,6 +70,7 @@ public class Project24
         String inputFile = args[0];
         int[][] table = createTable(inputFile);
         printTable(table);
+        System.out.println();
         int[][] result = processTable(table);
         printTable(result);
     }
