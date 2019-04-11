@@ -5,7 +5,7 @@ function myGCD(a::Int, b::Int)
     row = 1
     while table[row, 2] > 0
         table[row, 3] = table[row, 1] % table[row, 2]
-        table[row, 4] = divrem(table[row, 1], table[row, 2])[1]
+        table[row, 4] = table[row, 1] ÷ table[row, 2]
         table[row+1, 1] = table[row, 2]
         table[row+1, 2] = table[row, 3]
         row += 1
