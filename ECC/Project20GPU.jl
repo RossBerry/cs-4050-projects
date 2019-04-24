@@ -1,3 +1,5 @@
+using CUDAdrv, CUDAnative, CuArrays
+
 function fracMod(num::BigInt, den::BigInt, m::BigInt)
     if num < 0 
         num = m + num
